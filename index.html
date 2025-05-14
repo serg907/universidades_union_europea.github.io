@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Universidades en la Unión Europea</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -52,12 +53,21 @@
     #downloadBtn:hover {
       background-color: #27ae60;
     }
+    #chartContainer {
+      width: 90%;
+      max-width: 1000px;
+      margin: 40px auto;
+    }
   </style>
 </head>
 <body>
   <h1>Universidades en la Unión Europea</h1>
 
   <button id="downloadBtn">Descargar tabla en CSV</button>
+
+  <div id="chartContainer">
+    <canvas id="universityChart"></canvas>
+  </div>
 
   <table id="universitiesTable">
     <thead>
@@ -100,6 +110,7 @@
   <caption>Fuente: Wikipedia, Statista, Research in Germany</caption>
 
   <script>
+    // Botón de descarga CSV
     document.getElementById("downloadBtn").addEventListener("click", function () {
       const rows = document.querySelectorAll("#universitiesTable tr");
       let csv = [];
@@ -120,6 +131,47 @@
       downloadLink.click();
       document.body.removeChild(downloadLink);
     });
+
+    // Gráfico de barras
+    const ctx = document.getElementById("universityChart").getContext("2d");
+    const data = {
+      labels: [
+        "Alemania", "Austria", "Bélgica", "Bulgaria", "Croacia", "Dinamarca", "Eslovaquia", "Eslovenia",
+        "Estonia", "Finlandia", "Francia", "Grecia", "Hungría", "Irlanda", "Italia", "Letonia", "Lituania",
+        "Luxemburgo", "Malta", "Países Bajos", "Polonia", "Portugal", "Rep. Checa", "Rumanía", "Suecia", "Suiza"
+      ],
+      datasets: [{
+        label: 'Número de universidades',
+        data: [109, 22, 11, 51, 9, 8, 20, 4, 6, 14, 71, 24, 21, 9, 97, 6, 14, 1, 1, 13, 457, 14, 26, 49, 14, 12],
+        backgroundColor: '#3498db',
+        borderColor: '#2980b9',
+        borderWidth: 1
+      }]
+    };
+    const config = {
+      type: 'bar',
+      data: data,
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        scales: {
+          x: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Cantidad'
+            }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'País'
+            }
+          }
+        }
+      }
+    };
+    new Chart(ctx, config);
   </script>
 </body>
 </html>

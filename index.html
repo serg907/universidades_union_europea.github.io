@@ -14,8 +14,17 @@
       text-align: center;
       color: #2c3e50;
     }
+    #searchInput {
+      display: block;
+      margin: 20px auto;
+      width: 50%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
     table {
-      width: 80%;
+      width: 90%;
       margin: 20px auto;
       border-collapse: collapse;
       background-color: #ffffff;
@@ -54,14 +63,19 @@
       background-color: #27ae60;
     }
     #chartContainer {
-      width: 90%;
-      max-width: 1000px;
+      width: 100%;
+      max-width: 1200px;
       margin: 40px auto;
+    }
+    canvas {
+      max-height: 900px;
     }
   </style>
 </head>
 <body>
   <h1>Universidades en la Unión Europea</h1>
+
+  <input type="text" id="searchInput" placeholder="Buscar país...">
 
   <button id="downloadBtn">Descargar tabla en CSV</button>
 
@@ -110,6 +124,16 @@
   <caption>Fuente: Wikipedia, Statista, Research in Germany</caption>
 
   <script>
+    // Filtro de búsqueda en tabla
+    document.getElementById("searchInput").addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#universitiesTable tbody tr");
+      rows.forEach(row => {
+        const match = row.innerText.toLowerCase().includes(query);
+        row.style.display = match ? "" : "none";
+      });
+    });
+
     // Botón de descarga CSV
     document.getElementById("downloadBtn").addEventListener("click", function () {
       const rows = document.querySelectorAll("#universitiesTable tr");
@@ -132,7 +156,7 @@
       document.body.removeChild(downloadLink);
     });
 
-    // Gráfico de barras
+    // Gráfico de barras con etiquetas visibles
     const ctx = document.getElementById("universityChart").getContext("2d");
     const data = {
       labels: [
@@ -141,11 +165,9 @@
         "Luxemburgo", "Malta", "Países Bajos", "Polonia", "Portugal", "Rep. Checa", "Rumanía", "Suecia", "Suiza"
       ],
       datasets: [{
-        label: 'Número de universidades',
+        label: 'Universidades',
         data: [109, 22, 11, 51, 9, 8, 20, 4, 6, 14, 71, 24, 21, 9, 97, 6, 14, 1, 1, 13, 457, 14, 26, 49, 14, 12],
-        backgroundColor: '#3498db',
-        borderColor: '#2980b9',
-        borderWidth: 1
+        backgroundColor: '#3498db'
       }]
     };
     const config = {
@@ -154,6 +176,7 @@
       options: {
         indexAxis: 'y',
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           x: {
             beginAtZero: true,
@@ -163,6 +186,12 @@
             }
           },
           y: {
+            ticks: {
+              autoSkip: false,
+              font: {
+                size: 14
+              }
+            },
             title: {
               display: true,
               text: 'País'

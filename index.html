@@ -77,60 +77,113 @@
     a:hover {
       text-decoration: underline;
     }
+    #captchaContainer {
+      text-align: center;
+      margin-top: 100px;
+    }
+    #captchaInput {
+      padding: 8px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    #captchaContainer button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      background-color: #2980b9;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #captchaContainer button:hover {
+      background-color: #1f618d;
+    }
   </style>
 </head>
 <body>
-  <h1>Universidades en la Unión Europea</h1>
-
-  <input type="text" id="searchInput" placeholder="Buscar país...">
-
-  <div id="chartContainer">
-    <canvas id="universityChart"></canvas>
+  <!-- CAPTCHA ANTES DE ENTRAR -->
+  <div id="captchaContainer">
+    <h2>Verificación humana</h2>
+    <p>Por favor, resuelve la siguiente operación para acceder:</p>
+    <p id="captchaQuestion" style="font-size: 24px; font-weight: bold;"></p>
+    <input type="text" id="captchaInput" placeholder="Tu respuesta">
+    <button onclick="verifyCaptcha()">Verificar</button>
+    <p id="captchaError" style="color: red; margin-top: 10px;"></p>
   </div>
 
-  <button id="downloadBtn">Descargar tabla en CSV</button>
+  <!-- CONTENIDO PRINCIPAL -->
+  <div id="mainContent" style="display: none;">
+    <h1>Universidades en la Unión Europea</h1>
 
-  <table id="universitiesTable">
-    <thead>
-      <tr>
-        <th>País</th>
-        <th>Número aproximado de universidades</th>
-        <th>Enlace a la fuente</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Alemania</td><td>109</td><td><a href="https://www.research-in-germany.org/en/research-landscape/university-landscape.html" target="_blank">Fuente</a></td></tr>
-      <tr><td>Austria</td><td>22</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Austria" target="_blank">Fuente</a></td></tr>
-      <tr><td>Bélgica</td><td>11</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Belgium" target="_blank">Fuente</a></td></tr>
-      <tr><td>Bulgaria</td><td>51</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Bulgaria" target="_blank">Fuente</a></td></tr>
-      <tr><td>Croacia</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Croatia" target="_blank">Fuente</a></td></tr>
-      <tr><td>Dinamarca</td><td>8</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Denmark" target="_blank">Fuente</a></td></tr>
-      <tr><td>Eslovaquia</td><td>20</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovakia" target="_blank">Fuente</a></td></tr>
-      <tr><td>Eslovenia</td><td>4</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovenia" target="_blank">Fuente</a></td></tr>
-      <tr><td>Estonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Estonia" target="_blank">Fuente</a></td></tr>
-      <tr><td>Finlandia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Finland" target="_blank">Fuente</a></td></tr>
-      <tr><td>Francia</td><td>71</td><td><a href="https://www.statista.com/statistics/1337133/number-universities-france/" target="_blank">Fuente</a></td></tr>
-      <tr><td>Grecia</td><td>24</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Greece" target="_blank">Fuente</a></td></tr>
-      <tr><td>Hungría</td><td>21</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Hungary" target="_blank">Fuente</a></td></tr>
-      <tr><td>Irlanda</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Ireland" target="_blank">Fuente</a></td></tr>
-      <tr><td>Italia</td><td>97</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Italy" target="_blank">Fuente</a></td></tr>
-      <tr><td>Letonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Latvia" target="_blank">Fuente</a></td></tr>
-      <tr><td>Lituania</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Lithuania" target="_blank">Fuente</a></td></tr>
-      <tr><td>Luxemburgo</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Luxembourg" target="_blank">Fuente</a></td></tr>
-      <tr><td>Malta</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Malta" target="_blank">Fuente</a></td></tr>
-      <tr><td>Países Bajos</td><td>13</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Netherlands" target="_blank">Fuente</a></td></tr>
-      <tr><td>Polonia</td><td>457</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Poland" target="_blank">Fuente</a></td></tr>
-      <tr><td>Portugal</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Portugal" target="_blank">Fuente</a></td></tr>
-      <tr><td>República Checa</td><td>26</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Czech_Republic" target="_blank">Fuente</a></td></tr>
-      <tr><td>Rumanía</td><td>49</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Romania" target="_blank">Fuente</a></td></tr>
-      <tr><td>Suecia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Sweden" target="_blank">Fuente</a></td></tr>
-      <tr><td>Suiza</td><td>12</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Switzerland" target="_blank">Fuente</a></td></tr>
-    </tbody>
-  </table>
+    <input type="text" id="searchInput" placeholder="Buscar país...">
 
-  <caption>Fuente: Wikipedia, Statista, Research in Germany</caption>
+    <div id="chartContainer">
+      <canvas id="universityChart"></canvas>
+    </div>
 
+    <button id="downloadBtn">Descargar tabla en CSV</button>
+
+    <table id="universitiesTable">
+      <thead>
+        <tr>
+          <th>País</th>
+          <th>Número aproximado de universidades</th>
+          <th>Enlace a la fuente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Alemania</td><td>109</td><td><a href="https://www.research-in-germany.org/en/research-landscape/university-landscape.html" target="_blank">Fuente</a></td></tr>
+        <tr><td>Austria</td><td>22</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Austria" target="_blank">Fuente</a></td></tr>
+        <tr><td>Bélgica</td><td>11</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Belgium" target="_blank">Fuente</a></td></tr>
+        <tr><td>Bulgaria</td><td>51</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Bulgaria" target="_blank">Fuente</a></td></tr>
+        <tr><td>Croacia</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Croatia" target="_blank">Fuente</a></td></tr>
+        <tr><td>Dinamarca</td><td>8</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Denmark" target="_blank">Fuente</a></td></tr>
+        <tr><td>Eslovaquia</td><td>20</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovakia" target="_blank">Fuente</a></td></tr>
+        <tr><td>Eslovenia</td><td>4</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovenia" target="_blank">Fuente</a></td></tr>
+        <tr><td>Estonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Estonia" target="_blank">Fuente</a></td></tr>
+        <tr><td>Finlandia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Finland" target="_blank">Fuente</a></td></tr>
+        <tr><td>Francia</td><td>71</td><td><a href="https://www.statista.com/statistics/1337133/number-universities-france/" target="_blank">Fuente</a></td></tr>
+        <tr><td>Grecia</td><td>24</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Greece" target="_blank">Fuente</a></td></tr>
+        <tr><td>Hungría</td><td>21</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Hungary" target="_blank">Fuente</a></td></tr>
+        <tr><td>Irlanda</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Ireland" target="_blank">Fuente</a></td></tr>
+        <tr><td>Italia</td><td>97</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Italy" target="_blank">Fuente</a></td></tr>
+        <tr><td>Letonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Latvia" target="_blank">Fuente</a></td></tr>
+        <tr><td>Lituania</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Lithuania" target="_blank">Fuente</a></td></tr>
+        <tr><td>Luxemburgo</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Luxembourg" target="_blank">Fuente</a></td></tr>
+        <tr><td>Malta</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Malta" target="_blank">Fuente</a></td></tr>
+        <tr><td>Países Bajos</td><td>13</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Netherlands" target="_blank">Fuente</a></td></tr>
+        <tr><td>Polonia</td><td>457</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Poland" target="_blank">Fuente</a></td></tr>
+        <tr><td>Portugal</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Portugal" target="_blank">Fuente</a></td></tr>
+        <tr><td>República Checa</td><td>26</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Czech_Republic" target="_blank">Fuente</a></td></tr>
+        <tr><td>Rumanía</td><td>49</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Romania" target="_blank">Fuente</a></td></tr>
+        <tr><td>Suecia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Sweden" target="_blank">Fuente</a></td></tr>
+        <tr><td>Suiza</td><td>12</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Switzerland" target="_blank">Fuente</a></td></tr>
+      </tbody>
+    </table>
+
+    <caption>Fuente: Wikipedia, Statista, Research in Germany</caption>
+  </div>
+
+  <!-- SCRIPTS -->
   <script>
+    // CAPTCHA
+    let a = Math.floor(Math.random() * 10) + 1;
+    let b = Math.floor(Math.random() * 10) + 1;
+    document.getElementById("captchaQuestion").innerText = `${a} + ${b} = ?`;
+
+    function verifyCaptcha() {
+      const input = parseInt(document.getElementById("captchaInput").value);
+      const error = document.getElementById("captchaError");
+      if (input === a + b) {
+        document.getElementById("captchaContainer").style.display = "none";
+        document.getElementById("mainContent").style.display = "block";
+      } else {
+        error.innerText = "Respuesta incorrecta. Inténtalo de nuevo.";
+      }
+    }
+
     // Filtro de búsqueda
     document.getElementById("searchInput").addEventListener("input", function () {
       const query = this.value.toLowerCase();
@@ -183,9 +236,7 @@
       options: {
         responsive: true,
         plugins: {
-          legend: {
-            display: false
-          }
+          legend: { display: false }
         },
         scales: {
           x: {
@@ -209,4 +260,5 @@
   </script>
 </body>
 </html>
+
 

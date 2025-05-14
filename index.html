@@ -15,7 +15,7 @@
     }
     table {
       width: 80%;
-      margin: 0 auto;
+      margin: 20px auto;
       border-collapse: collapse;
       background-color: #ffffff;
     }
@@ -38,11 +38,28 @@
       color: #7f8c8d;
       margin-top: 10px;
     }
+    #downloadBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #downloadBtn:hover {
+      background-color: #27ae60;
+    }
   </style>
 </head>
 <body>
   <h1>Universidades en la Unión Europea</h1>
-  <table>
+
+  <button id="downloadBtn">Descargar tabla en CSV</button>
+
+  <table id="universitiesTable">
     <thead>
       <tr>
         <th>País</th>
@@ -51,34 +68,58 @@
       </tr>
     </thead>
     <tbody>
-      <tr><td>Alemania</td><td>109</td><td><a href="https://www.research-in-germany.org/en/research-landscape/university-landscape.html" target="_blank">Research in Germany</a></td></tr>
-      <tr><td>Austria</td><td>22</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Austria" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Bélgica</td><td>11</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Belgium" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Bulgaria</td><td>51</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Bulgaria" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Croacia</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Croatia" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Dinamarca</td><td>8</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Denmark" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Eslovaquia</td><td>20</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovakia" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Eslovenia</td><td>4</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Slovenia" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Estonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Estonia" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Finlandia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Finland" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Francia</td><td>71</td><td><a href="https://www.statista.com/statistics/1337133/number-universities-france/" target="_blank">Statista</a></td></tr>
-      <tr><td>Grecia</td><td>24</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Greece" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Hungría</td><td>21</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Hungary" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Irlanda</td><td>9</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Ireland" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Italia</td><td>97</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Italy" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Lituania</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Lithuania" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Letonia</td><td>6</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Latvia" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Luxemburgo</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Luxembourg" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Malta</td><td>1</td><td><a href="https://en.wikipedia.org/wiki/University_of_Malta" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Países Bajos</td><td>13</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Netherlands" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Polonia</td><td>457</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Poland" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Portugal</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Portugal" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>República Checa</td><td>26</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_the_Czech_Republic" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Rumanía</td><td>49</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Romania" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Suecia</td><td>14</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Sweden" target="_blank">Wikipedia</a></td></tr>
-      <tr><td>Suiza</td><td>12</td><td><a href="https://en.wikipedia.org/wiki/List_of_universities_in_Switzerland" target="_blank">Wikipedia</a></td></tr>
+      <tr><td>Alemania</td><td>109</td><td>https://www.research-in-germany.org/en/research-landscape/university-landscape.html</td></tr>
+      <tr><td>Austria</td><td>22</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Austria</td></tr>
+      <tr><td>Bélgica</td><td>11</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Belgium</td></tr>
+      <tr><td>Bulgaria</td><td>51</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Bulgaria</td></tr>
+      <tr><td>Croacia</td><td>9</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Croatia</td></tr>
+      <tr><td>Dinamarca</td><td>8</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Denmark</td></tr>
+      <tr><td>Eslovaquia</td><td>20</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Slovakia</td></tr>
+      <tr><td>Eslovenia</td><td>4</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Slovenia</td></tr>
+      <tr><td>Estonia</td><td>6</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Estonia</td></tr>
+      <tr><td>Finlandia</td><td>14</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Finland</td></tr>
+      <tr><td>Francia</td><td>71</td><td>https://www.statista.com/statistics/1337133/number-universities-france/</td></tr>
+      <tr><td>Grecia</td><td>24</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Greece</td></tr>
+      <tr><td>Hungría</td><td>21</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Hungary</td></tr>
+      <tr><td>Irlanda</td><td>9</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Ireland</td></tr>
+      <tr><td>Italia</td><td>97</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Italy</td></tr>
+      <tr><td>Letonia</td><td>6</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Latvia</td></tr>
+      <tr><td>Lituania</td><td>14</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Lithuania</td></tr>
+      <tr><td>Luxemburgo</td><td>1</td><td>https://en.wikipedia.org/wiki/University_of_Luxembourg</td></tr>
+      <tr><td>Malta</td><td>1</td><td>https://en.wikipedia.org/wiki/University_of_Malta</td></tr>
+      <tr><td>Países Bajos</td><td>13</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_the_Netherlands</td></tr>
+      <tr><td>Polonia</td><td>457</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Poland</td></tr>
+      <tr><td>Portugal</td><td>14</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Portugal</td></tr>
+      <tr><td>República Checa</td><td>26</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_the_Czech_Republic</td></tr>
+      <tr><td>Rumanía</td><td>49</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Romania</td></tr>
+      <tr><td>Suecia</td><td>14</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Sweden</td></tr>
+      <tr><td>Suiza</td><td>12</td><td>https://en.wikipedia.org/wiki/List_of_universities_in_Switzerland</td></tr>
     </tbody>
   </table>
-  <caption>Fuente: Wikipedia, Statista, Research in Germany, etc.</caption>
+
+  <caption>Fuente: Wikipedia, Statista, Research in Germany</caption>
+
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", function () {
+      const rows = document.querySelectorAll("#universitiesTable tr");
+      let csv = [];
+      for (let row of rows) {
+        const cols = row.querySelectorAll("td, th");
+        let data = [];
+        for (let col of cols) {
+          data.push(`"${col.innerText}"`);
+        }
+        csv.push(data.join(","));
+      }
+      const csvFile = new Blob([csv.join("\n")], { type: "text/csv" });
+      const downloadLink = document.createElement("a");
+      downloadLink.download = "universidades_ue.csv";
+      downloadLink.href = window.URL.createObjectURL(csvFile);
+      downloadLink.style.display = "none";
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+  </script>
 </body>
 </html>
